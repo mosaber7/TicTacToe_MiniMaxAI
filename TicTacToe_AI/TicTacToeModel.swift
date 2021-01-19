@@ -1,0 +1,168 @@
+import Foundation
+enum piece{
+    case X //the X starts the game
+    case O
+    case E // Empty
+    
+    var opposite: piece{
+        switch self {
+        case .X:
+            return .O
+        case .O:
+            return .X
+        default:
+            return .E
+        }
+        
+        }
+    var toString: String{
+        switch self {
+        case .X:
+            return "X"
+        case .O:
+            return "O"
+        case .E:
+            return "E"
+        }
+    }
+    }
+
+struct Board{
+    
+    typealias Move = Int
+    //empty game board has nine empty positions
+    let emptyBoard: [piece] = [.E, .E, .E,
+                               .E, .E, .E,
+                               .E, .E, .E]
+    //the board represented in an array of ppieces form
+    let position: [piece]
+    //definr whose turn (X or O)
+    let turn: piece
+    //the last move made, to be used in the minimax algorithm
+    let lastMove: Move
+    
+    init(position: [piece] = [.E, .E, .E,
+                              .E, .E, .E,
+                              .E, .E, .E],
+         turn: piece = .X, lastMove: Int = -1){
+        self.position = position
+        self.turn = turn
+        self.lastMove = lastMove
+    }
+    
+    // every time a move is done this func will generate a new board with the new piece added
+    func move(_ location: Move) -> Board{
+        //make a copy of the old Board
+        var tempPosition = position
+        // add the new piece to the new board, turn -> is defined in the init
+        tempPosition[location] = turn
+        
+        //call the init to intialize a new Board with the new turn, board positions and the last move
+        return Board(position: tempPosition, turn: turn.opposite, lastMove: location)
+    }
+    
+    var validMoves: [Move]{
+        var validMovesArr: [Move] = []
+        var index = 0
+        for piece in position{
+            if piece == .E{
+                validMovesArr.append(index)
+                
+            }
+            index += 1
+        }
+        return validMovesArr
+    }
+     func isWin()-> Bool{
+        //tp win a player should have at least three positions, the opnonent at least 2 so NO NEED to check if someone won until this point
+        if validMoves.count >= 5 {return false}
+       
+        else { return
+            // all zero wining cases
+            position[0] != .E && position[0] == position[1] && position[0] == position[2] ||
+            position[0] != .E && position[0] == position[3] && position[0] == position[6] ||
+            position[0] != .E && position[0] == position[4] && position[0] == position[8] ||
+            position[1] != .E && position[1] == position[4] && position[1] == position[7] ||
+            
+            position[2] != .E && position[2] == position[5] && position[2] == position[8] ||
+            position[2] != .E && position[2] == position[4] && position[2] == position[6] ||
+            
+            position[3] != .E && position[3] == position[4] && position[3] == position[5] ||
+            
+            position[6] != .E && position[6] == position[7] && position[6] == position[8] 
+        }
+    }
+    var isDraw: Bool{
+        if position.contains(.E){
+            return false
+        }
+        return true
+    }
+
+    // go through ever possible move and return the calculted wieght of the move picked, however it doesn't tell us what is the best move
+    func minimax(_ board: Board, maxmizing: Bool, player: piece, depth: Int) -> Int{
+        
+        //checks the base conditions whether the move is a win or loose or draw
+        if board.isWin() && player == board.turn.opposite{
+            return 1}
+        else if board.isWin() && player != board.turn.opposite{
+            return -1}
+        else if board.isDraw {
+            return 0}
+        else if depth > 5 {
+            print("Clculatin... please wait")
+            if maxmizing{return 1}
+            return 0
+            }
+        if maxmizing{
+            // a very small value to be replaced by the upcoming value
+            var bestVal = Int.min
+            for move in validMoves{
+               let result = minimax(board.move(move), maxmizing: false, player: player, depth: depth+1)
+                bestVal = max(result, bestVal)
+                
+            }
+        return bestVal
+        }
+        //minimizing
+        else{
+            // a very large value to be replaced by the any value
+            var WorstVal = Int.max
+            for move in validMoves {
+                let result = minimax(board.move(move), maxmizing: true, player: player, depth: depth+1)
+                WorstVal = min(result, WorstVal)
+            }
+        return WorstVal
+        }
+        
+    }
+    // to run minmax() function on every available valid position
+    func findBestMove(_ board: Board) ->Move{
+        var bestVal = Int.min
+        var bestMove = -1
+        if validMoves.count <= 6{
+        for move in board.validMoves{
+            let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: 0)
+            if result > bestVal{
+                bestVal = result
+                bestMove = move
+            }
+        }
+    return bestMove
+        }
+    return validMoves.randomElement()!
+    }
+    
+    func updateScore(_ xScore: inout Int,_ oScore: inout Int){
+        switch turn {
+        case .X:
+            oScore += 1
+        case.O:
+            xScore += 1
+        default:
+            break
+        }
+     }
+    
+    
+}
