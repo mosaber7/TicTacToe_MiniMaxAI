@@ -25,10 +25,11 @@ class TicTacToeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        stateLabel.text = currentState
        
     }
     @IBAction func buttonTapped(_ sender: UIButton) {
-
+print("taped")
             // o turn
             if game.turn == .O ,game.validMoves.contains(sender.tag){
                 sender.setBackgroundImage(UIImage(named: "O.png"), for: .normal)
@@ -49,10 +50,12 @@ class TicTacToeViewController: UIViewController {
                 
                 }else{
                     let tmpindex = game.validMoves.randomElement()!
-                    let tmpButton = self.view.viewWithTag(tmpindex) as? UIButton
+                    if let tmpButton = self.view.viewWithTag(tmpindex) as? UIButton{
                     game = Board(position: game.move(tmpindex).position, turn: game.turn.opposite, lastMove: game.findBestMove(game))
-                    tmpButton?.setBackgroundImage(xImg, for: .normal)
-                    usedPositions.append(tmpButton!)
+                    tmpButton.setBackgroundImage(xImg, for: .normal)
+                    usedPositions.append(tmpButton)
+                    
+                    }
                     
                 }
             
@@ -70,6 +73,7 @@ class TicTacToeViewController: UIViewController {
         }
         else if game.isDraw{
             stateLabel.text = "TIE! 🤝"
+            clearGameBoard(board: usedPositions)
         }
         else{
             if stateLabel.text != nil{

@@ -100,8 +100,8 @@ struct Board{
     }
 
     // go through ever possible move and return the calculted wieght of the move picked, however it doesn't tell us what is the best move
-    func minimax(_ board: Board, maxmizing: Bool, player: piece, depth: Int) -> Int{
-        
+    func minimax(_ board: Board, maxmizing: Bool, player: piece, depth: Int,_ alpha: inout Int,_ beta: inout Int) -> Int{
+        if depth == 0{ return 0}
         //checks the base conditions whether the move is a win or loose or draw
         if board.isWin() && player == board.turn.opposite{
             return 1}
@@ -109,8 +109,7 @@ struct Board{
             return -1}
         else if board.isDraw {
             return 0}
-        else if depth > 5 {
-            print("Clculatin... please wait")
+        else if depth > 20 {
             if maxmizing{return 1}
             return 0
             }
@@ -118,8 +117,12 @@ struct Board{
             // a very small value to be replaced by the upcoming value
             var bestVal = Int.min
             for move in validMoves{
-               let result = minimax(board.move(move), maxmizing: false, player: player, depth: depth+1)
+               let result = minimax(board.move(move), maxmizing: false, player: player, depth: depth-1, &alpha, &beta)
                 bestVal = max(result, bestVal)
+                alpha = max(bestVal, alpha)
+                if beta <= alpha{
+                    break
+                }
                 
             }
         return bestVal
@@ -129,8 +132,12 @@ struct Board{
             // a very large value to be replaced by the any value
             var WorstVal = Int.max
             for move in validMoves {
-                let result = minimax(board.move(move), maxmizing: true, player: player, depth: depth+1)
+                let result = minimax(board.move(move), maxmizing: true, player: player, depth: depth-1, &alpha, &beta)
                 WorstVal = min(result, WorstVal)
+                beta = min(beta, WorstVal)
+                if beta <= alpha{
+                    break
+                }
             }
         return WorstVal
         }
@@ -138,19 +145,20 @@ struct Board{
     }
     // to run minmax() function on every available valid position
     func findBestMove(_ board: Board) ->Move{
+        var alpha = Int.min
+        var beta = Int.max
         var bestVal = Int.min
         var bestMove = -1
-        if validMoves.count <= 6{
+
         for move in board.validMoves{
-            let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: 0)
+            let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: 25, &alpha, &beta)
             if result > bestVal{
                 bestVal = result
                 bestMove = move
             }
         }
     return bestMove
-        }
-    return validMoves.randomElement()!
+        
     }
     
     func updateScore(_ xScore: inout Int,_ oScore: inout Int){
