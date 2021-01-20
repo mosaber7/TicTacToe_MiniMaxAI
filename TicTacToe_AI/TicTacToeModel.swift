@@ -15,17 +15,8 @@ enum piece{
         }
         
         }
-    var toString: String{
-        switch self {
-        case .X:
-            return "X"
-        case .O:
-            return "O"
-        case .E:
-            return "E"
-        }
     }
-    }
+
 
 struct Board{
     
@@ -67,10 +58,10 @@ struct Board{
         for piece in position{
             if piece == .E{
                 validMovesArr.append(index)
-                
             }
             index += 1
         }
+        print(validMovesArr)
         return validMovesArr
     }
      func isWin()-> Bool{
@@ -101,6 +92,7 @@ struct Board{
 
     // go through ever possible move and return the calculted wieght of the move picked, however it doesn't tell us what is the best move
     func minimax(_ board: Board, maxmizing: Bool, player: piece, depth: Int,_ alpha: inout Int,_ beta: inout Int) -> Int{
+        
         if depth == 0{ return 0}
         //checks the base conditions whether the move is a win or loose or draw
         if board.isWin() && player == board.turn.opposite{
@@ -109,10 +101,7 @@ struct Board{
             return -1}
         else if board.isDraw {
             return 0}
-        else if depth > 20 {
-            if maxmizing{return 1}
-            return 0
-            }
+
         if maxmizing{
             // a very small value to be replaced by the upcoming value
             var bestVal = Int.min
@@ -144,14 +133,17 @@ struct Board{
         
     }
     // to run minmax() function on every available valid position
-    func findBestMove(_ board: Board) ->Move{
+    func findBestMove(_ board: Board, depth: Int) ->Move{
+        if validMoves.count == 9{
+            return validMoves.randomElement()!
+        }
         var alpha = Int.min
         var beta = Int.max
         var bestVal = Int.min
         var bestMove = -1
 
         for move in board.validMoves{
-            let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: 25, &alpha, &beta)
+            let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: depth, &alpha, &beta)
             if result > bestVal{
                 bestVal = result
                 bestMove = move
