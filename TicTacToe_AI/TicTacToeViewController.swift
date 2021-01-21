@@ -37,7 +37,7 @@ class TicTacToeViewController: UIViewController {
         userMove(sender)
         //x move (ai)
         aiMove()
-        
+            
     }
     
     @IBAction func modeSwitchValueChanged(_ sender: UISwitch) {
