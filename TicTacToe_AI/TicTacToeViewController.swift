@@ -23,7 +23,7 @@ class TicTacToeViewController: UIViewController {
     var usedPositions: [UIButton] = []
     // 20 for easy level
     // 30 for hard level
-    var hardnessLevel: Int = 25
+    var hardnessLevel: Int = Int.max
     
     
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class TicTacToeViewController: UIViewController {
     
     @IBAction func modeSwitchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
-         hardnessLevel = 25
+            hardnessLevel = Int.max
         }
         else {
             hardnessLevel = 20
