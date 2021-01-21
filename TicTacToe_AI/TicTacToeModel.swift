@@ -61,7 +61,6 @@ struct Board{
             }
             index += 1
         }
-        print(validMovesArr)
         return validMovesArr
     }
      func isWin()-> Bool{

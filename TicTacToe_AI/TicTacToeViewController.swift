@@ -23,7 +23,7 @@ class TicTacToeViewController: UIViewController {
     var usedPositions: [UIButton] = []
     // 20 for easy level
     // 30 for hard level
-    var hardnessLevel: Int = Int.max
+    var hardnessLevel: Int = 30
     
     
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class TicTacToeViewController: UIViewController {
     
     @IBAction func modeSwitchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
-            hardnessLevel = Int.max
+            hardnessLevel = 30
         }
         else {
             hardnessLevel = 20
@@ -72,19 +72,7 @@ class TicTacToeViewController: UIViewController {
                 
             }
             
-            else{
-                let tmpindex = game.validMoves.randomElement()!
-                if let tmpButton = self.view.viewWithTag(tmpindex + 1) as? UIButton{
-                    game = Board(position: game.move(tmpindex).position, turn: game.turn.opposite, lastMove: game.findBestMove(game, depth: hardnessLevel))
-                    tmpButton.setBackgroundImage(xImg, for: .normal)
-                    usedPositions.append(tmpButton)
-                    
-                    
-                    
-                }
-                
-                
-            }
+         
             checkWinner()
         }
         
