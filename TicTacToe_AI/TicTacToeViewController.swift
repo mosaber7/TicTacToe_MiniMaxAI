@@ -25,7 +25,8 @@ class TicTacToeViewController: UIViewController {
     var usedPositions: [UIButton]               = []
     var animationPositionsUsed: [AnimationView] = []
     let hardnessLevel: Int                      = 30
-    let xAnimation , oAnimation                 = AnimationView()
+    let xAnimation                              = AnimationView()
+    let oAnimation                              = AnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
