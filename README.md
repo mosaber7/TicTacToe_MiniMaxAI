@@ -13,7 +13,7 @@ In this app you get to play your favirout game and get beaten by the AI.
 the AI is implemented using the minimax searching algorithm along with the alpha-beta optimzation!
 the game also is supported with wonderfull animations to make it more joyfull.
 ## Screenshots
-![alt text](http://url/to/tictactoe_ai.png)
+![image](https://user-images.githubusercontent.com/52084438/106022133-3265e480-60ce-11eb-9305-af5c52702214.png)
 
 ## Technologies
 * minimax searching algorithm
@@ -23,4 +23,4 @@ the game also is supported with wonderfull animations to make it more joyfull.
 ## Inspiration
 Project inspired by `classic-computer-science-problems-swift Book`.
 ## Contact
-Created by [@flynerdpl](https://www.linkedin.com/in/mohamed-saber-fares/) - feel free to contact me!
+Created by [@mosaber](https://www.linkedin.com/in/mohamed-saber-fares/) - feel free to contact me!
