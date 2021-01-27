@@ -6,55 +6,63 @@
 //
 
 import UIKit
+import Lottie
 
 class TicTacToeViewController: UIViewController {
     
-    
-    @IBOutlet weak var stateLabel: UILabel!
+  //  @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var xScoreLabel: UILabel!
     @IBOutlet weak var oScoreLabel: UILabel!
+    @IBOutlet weak var xAnimationView: UIView!
+    @IBOutlet weak var oAnimationView: UIView!
     
     var game = Board()
-    let oImg: UIImage? = UIImage(named: "O.png")
-    let xImg: UIImage? = UIImage(named: "X.png")
-    var xScore: Int = 0
-    var oScore: Int = 0
-    var currentState: String = ""
-    var usedPositions: [UIButton] = []
-    // 20 for easy level
-    // 30 for hard level
-    var hardnessLevel: Int = 30
-    
+    let oImg: UIImage?                          = UIImage(named: "O.png")
+    let xImg: UIImage?                          = UIImage(named: "X.png")
+    var xScore: Int                             = 0
+    var oScore: Int                             = 0
+    var currentState: String                    = ""
+    var usedPositions: [UIButton]               = []
+    var animationPositionsUsed: [AnimationView] = []
+    let hardnessLevel: Int                      = 30
+    let xAnimation , oAnimation                 = AnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        xAnimation.animation = Animation.named("sparta2")
+        xAnimation.frame = xAnimationView.bounds
+        xAnimation.contentMode = .scaleAspectFit
+        xAnimationView.addSubview(xAnimation)
+        
+        oAnimation.animation = Animation.named("sparta")
+        oAnimation.frame = oAnimationView.bounds
+        oAnimation.contentMode = .scaleAspectFit
+        oAnimation.loopMode = .repeat(3)
+        oAnimationView.addSubview(oAnimation)
         //intial move
         aiMove()
+        
         
     }
     @IBAction func buttonTapped(_ sender: UIButton) {
         // o turn
-        userMove(sender)
+        userMove(sender.tag)
         //x move (ai)
         aiMove()
             
     }
     
-    @IBAction func modeSwitchValueChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            hardnessLevel = 30
-        }
-        else {
-            hardnessLevel = 20
-        }
-    }
     
     
-    func userMove(_ sender: UIButton){
-        if game.turn == .O ,game.validMoves.contains(sender.tag-1){
-            sender.setBackgroundImage(UIImage(named: "O.png"), for: .normal)
-            game = Board(position: game.move(sender.tag-1).position, turn: game.turn.opposite, lastMove: sender.tag-1)
-            usedPositions.append(sender)
+    func userMove(_ tag: Int){
+        if game.turn == .O ,game.validMoves.contains(tag-1){
+            let tmpButton = view.viewWithTag(tag) as! UIButton
+            game = Board(position: game.move(tag-1).position, turn: game.turn.opposite, lastMove: tag-1)
+            tmpButton.backgroundColor = .black
+            let animationView = animation(player: .O)
+            animationView.frame = tmpButton.bounds
+            tmpButton.addSubview(animationView)
+            
             checkWinner()
         }
         
@@ -67,8 +75,10 @@ class TicTacToeViewController: UIViewController {
             
             if let tmpButton = self.view.viewWithTag(xMove+1) as? UIButton{
                 game = Board(position: game.move(xMove).position, turn: game.turn.opposite, lastMove: game.findBestMove(game, depth: hardnessLevel))
-                tmpButton.setBackgroundImage(xImg, for: .normal)
-                usedPositions.append(tmpButton)
+                tmpButton.backgroundColor = .black
+                let animationView = animation(player: .X)
+                animationView.frame = tmpButton.bounds
+                tmpButton.addSubview(animationView)
                 
             }
             
@@ -77,35 +87,58 @@ class TicTacToeViewController: UIViewController {
         }
         
     }
+    func animation(player: piece)-> AnimationView{
+        let animationView = AnimationView()
+        switch player {
+        case .X:
+            animationView.animation = Animation.named("robot")
+        case .O:
+            animationView.animation = Animation.named("person")
+        default: break
+
+        }
+        animationView.contentMode = .scaleToFill
+        animationView.loopMode = .loop
+        animationPositionsUsed.append(animationView)
+        animationView.play()
+        return animationView
+    }
     
     func checkWinner() {
+        
+        
         if game.isWin(){
-            
             game.updateScore(&xScore, &oScore)
             xScoreLabel.text = String(xScore)
             oScoreLabel.text = String(oScore)
             let winner = game.turn.opposite
             clearGameBoard(board: usedPositions)
-            stateLabel.text = "\(winner) WINS🔥🔥🔥"
+      
+            switch winner {
+            case .X:
+                xAnimation.play()
+            case .O:
+                oAnimation.play()
+            default:
+                break
+            }
         }
         else if game.isDraw{
             clearGameBoard(board: usedPositions)
-            stateLabel.text = "TIE! 🤝"
-        }
-        // the normal state when the players still playing
-        else{
-            if stateLabel.text != nil{
-                stateLabel.text = "\(game.turn)'s turn"
-            }
+            xAnimation.play()
+            oAnimation.play()
+            
         }
     }
     
     func clearGameBoard(board array: [UIButton]){
         game =  Board()
-        for button in array{
-            button.setBackgroundImage(nil, for: .normal)
+        for animationView in animationPositionsUsed {
+            animationView.superview?.backgroundColor = .darkGray
+            animationView.removeFromSuperview()
         }
     }
+    
     
 }
 

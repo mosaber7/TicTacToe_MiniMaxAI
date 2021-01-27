@@ -1,0 +1,6 @@
+framework module Pods_TicTacToe_AI {
+  umbrella header "Pods-TicTacToe_AI-umbrella.h"
+
+  export *
+  module * { export * }
+}
