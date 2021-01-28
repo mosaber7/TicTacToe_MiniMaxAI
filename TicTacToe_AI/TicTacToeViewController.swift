@@ -25,25 +25,26 @@ class TicTacToeViewController: UIViewController {
     var usedPositions: [UIButton]               = []
     var animationPositionsUsed: [AnimationView] = []
     let hardnessLevel: Int                      = 30
-    let xAnimation                              = AnimationView()
-    let oAnimation                              = AnimationView()
+    var winner: piece                           = .E
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        xAnimation.animation = Animation.named("sparta2")
-        xAnimation.frame = xAnimationView.bounds
-        xAnimation.contentMode = .scaleAspectFit
-        xAnimationView.addSubview(xAnimation)
         
-        oAnimation.animation = Animation.named("sparta")
-        oAnimation.frame = oAnimationView.bounds
-        oAnimation.contentMode = .scaleAspectFit
-        oAnimation.loopMode = .repeat(3)
-        oAnimationView.addSubview(oAnimation)
         //intial move
         aiMove()
         
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        let xAnimation = animation(player: .X, playingSpot: false)
+        xAnimation.frame = xAnimationView.bounds
+        let oAnimation = animation(player: .O, playingSpot: false)
+        oAnimation.frame = oAnimationView.bounds
+        xAnimationView.addSubview(xAnimation)
+
+        oAnimationView.addSubview(oAnimation)
     }
     @IBAction func buttonTapped(_ sender: UIButton) {
         // o turn
@@ -60,7 +61,7 @@ class TicTacToeViewController: UIViewController {
             let tmpButton = view.viewWithTag(tag) as! UIButton
             game = Board(position: game.move(tag-1).position, turn: game.turn.opposite, lastMove: tag-1)
             tmpButton.backgroundColor = .black
-            let animationView = animation(player: .O)
+            let animationView = animation(player: .O, playingSpot: true)
             animationView.frame = tmpButton.bounds
             tmpButton.addSubview(animationView)
             
@@ -77,7 +78,7 @@ class TicTacToeViewController: UIViewController {
             if let tmpButton = self.view.viewWithTag(xMove+1) as? UIButton{
                 game = Board(position: game.move(xMove).position, turn: game.turn.opposite, lastMove: game.findBestMove(game, depth: hardnessLevel))
                 tmpButton.backgroundColor = .black
-                let animationView = animation(player: .X)
+                let animationView = animation(player: .X, playingSpot: true)
                 animationView.frame = tmpButton.bounds
                 tmpButton.addSubview(animationView)
                 
@@ -88,19 +89,22 @@ class TicTacToeViewController: UIViewController {
         }
         
     }
-    func animation(player: piece)-> AnimationView{
+    func animation(player: piece, playingSpot: Bool)-> AnimationView{
         let animationView = AnimationView()
         switch player {
         case .X:
-            animationView.animation = Animation.named("robot")
+            animationView.animation = Animation.named("sparta")
         case .O:
-            animationView.animation = Animation.named("person")
-        default: break
+            animationView.animation = Animation.named("sparta2")
+        default:
+            animationView.animation = Animation.named("looser")
 
         }
         animationView.contentMode = .scaleToFill
         animationView.loopMode = .loop
+        if playingSpot{
         animationPositionsUsed.append(animationView)
+        }
         animationView.play()
         return animationView
     }
@@ -109,25 +113,20 @@ class TicTacToeViewController: UIViewController {
         
         
         if game.isWin(){
+            winner = game.turn.opposite
+            performSegue(withIdentifier: "showWinner", sender: nil)
             game.updateScore(&xScore, &oScore)
             xScoreLabel.text = String(xScore)
             oScoreLabel.text = String(oScore)
-            let winner = game.turn.opposite
             clearGameBoard(board: usedPositions)
       
-            switch winner {
-            case .X:
-                xAnimation.play()
-            case .O:
-                oAnimation.play()
-            default:
-                break
-            }
+            
         }
         else if game.isDraw{
+            winner = .E
+            performSegue(withIdentifier: "showWinner", sender: nil)
             clearGameBoard(board: usedPositions)
-            xAnimation.play()
-            oAnimation.play()
+            
             
         }
     }
@@ -139,6 +138,15 @@ class TicTacToeViewController: UIViewController {
             animationView.removeFromSuperview()
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showWinner":
+            let winingViewController = segue.destination as! WiningScreenViewController
+            winingViewController.winner = winner
+            winingViewController.winingAnimation = animation(player: winner, playingSpot: false)
+        default:
+            preconditionFailure("unexpected segue Identifier")
+        }    }
     
     
 }

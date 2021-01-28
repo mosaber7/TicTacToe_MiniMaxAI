@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05286FBA25C3276600F70E5D /* WiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05286FB925C3276600F70E5D /* WiningViewController.swift */; };
+		05286FC225C33B6F00F70E5D /* looser.json in Resources */ = {isa = PBXBuildFile; fileRef = 05286FC125C33B6F00F70E5D /* looser.json */; };
 		056542A425B4500D00C22A0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056542A325B4500D00C22A0D /* AppDelegate.swift */; };
 		056542A625B4500D00C22A0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056542A525B4500D00C22A0D /* SceneDelegate.swift */; };
 		056542A825B4500D00C22A0D /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056542A725B4500D00C22A0D /* TicTacToeViewController.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05286FB925C3276600F70E5D /* WiningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiningViewController.swift; sourceTree = "<group>"; };
+		05286FC125C33B6F00F70E5D /* looser.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = looser.json; sourceTree = "<group>"; };
 		056542A025B4500D00C22A0D /* TicTacToe_AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe_AI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		056542A325B4500D00C22A0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		056542A525B4500D00C22A0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +82,7 @@
 				056542A525B4500D00C22A0D /* SceneDelegate.swift */,
 				056542A725B4500D00C22A0D /* TicTacToeViewController.swift */,
 				056542BA25B4570F00C22A0D /* TicTacToeModel.swift */,
+				05286FB925C3276600F70E5D /* WiningViewController.swift */,
 				056542A925B4500D00C22A0D /* Main.storyboard */,
 				056542AC25B4500E00C22A0D /* Assets.xcassets */,
 				056542AE25B4500E00C22A0D /* LaunchScreen.storyboard */,
@@ -92,6 +97,7 @@
 				05D6B38525C04E7800458B32 /* sparta2.json */,
 				05D6B38125C0424C00458B32 /* sparta.json */,
 				05D6B37C25C03CB200458B32 /* person.json */,
+				05286FC125C33B6F00F70E5D /* looser.json */,
 				05D6B37B25C03CB200458B32 /* robot.json */,
 			);
 			path = animation;
@@ -180,6 +186,7 @@
 				05D6B37D25C03CB200458B32 /* robot.json in Resources */,
 				056542AB25B4500D00C22A0D /* Main.storyboard in Resources */,
 				05D6B38625C04E7800458B32 /* sparta2.json in Resources */,
+				05286FC225C33B6F00F70E5D /* looser.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +243,7 @@
 				056542A825B4500D00C22A0D /* TicTacToeViewController.swift in Sources */,
 				056542A425B4500D00C22A0D /* AppDelegate.swift in Sources */,
 				056542A625B4500D00C22A0D /* SceneDelegate.swift in Sources */,
+				05286FBA25C3276600F70E5D /* WiningViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

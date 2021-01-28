@@ -4,9 +4,50 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Wining Screen View Controller-->
+        <scene sceneID="EEK-SI-hNJ">
+            <objects>
+                <viewController id="VCy-RI-RIX" customClass="WiningScreenViewController" customModule="TicTacToe_AI" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="027-8R-Blf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sQi-mh-bZz">
+                                <rect key="frame" x="36" y="160" width="342" height="206.5"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oq-OM-dut">
+                                <rect key="frame" x="166.5" y="402.5" width="81" height="45.5"/>
+                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="36"/>
+                                <color key="textColor" systemColor="systemGreenColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QTk-aV-5Pg"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sQi-mh-bZz" firstAttribute="leading" secondItem="QTk-aV-5Pg" secondAttribute="leading" constant="36" id="3W7-XS-q8C"/>
+                            <constraint firstItem="QTk-aV-5Pg" firstAttribute="trailing" secondItem="sQi-mh-bZz" secondAttribute="trailing" constant="36" id="9Fg-Nw-PpD"/>
+                            <constraint firstItem="8oq-OM-dut" firstAttribute="top" secondItem="sQi-mh-bZz" secondAttribute="bottom" constant="36" id="Gci-oe-UfT"/>
+                            <constraint firstItem="sQi-mh-bZz" firstAttribute="top" secondItem="QTk-aV-5Pg" secondAttribute="top" constant="160" id="LE4-is-b66"/>
+                            <constraint firstItem="QTk-aV-5Pg" firstAttribute="bottom" secondItem="8oq-OM-dut" secondAttribute="bottom" constant="360" id="QKQ-Jc-sc8"/>
+                            <constraint firstItem="8oq-OM-dut" firstAttribute="centerX" secondItem="027-8R-Blf" secondAttribute="centerX" id="hhO-jz-eZC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="6QJ-UM-zou"/>
+                    <connections>
+                        <outlet property="winingAnimationView" destination="sQi-mh-bZz" id="TXq-Iz-WGy"/>
+                        <outlet property="winingLabel" destination="8oq-OM-dut" id="1aM-K8-b4E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aZe-sw-VAu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-862.31884057971024" y="14.732142857142856"/>
+        </scene>
         <!--Tic Tac Toe View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -246,6 +287,7 @@
                         <outlet property="oScoreLabel" destination="vg5-Ud-lMT" id="pnc-H3-9pH"/>
                         <outlet property="xAnimationView" destination="UdD-N7-nxr" id="9kF-OG-Qsz"/>
                         <outlet property="xScoreLabel" destination="qE8-8P-qPo" id="lj9-80-Qnf"/>
+                        <segue destination="VCy-RI-RIX" kind="show" identifier="showWinner" id="h1T-D1-F61"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -253,4 +295,9 @@
             <point key="canvasLocation" x="28.985507246376812" y="88.392857142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
