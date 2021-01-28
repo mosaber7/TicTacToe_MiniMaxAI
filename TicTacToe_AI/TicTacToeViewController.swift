@@ -101,7 +101,7 @@ class TicTacToeViewController: UIViewController {
 
         }
         animationView.contentMode = .scaleToFill
-        animationView.loopMode = .loop
+        animationView.loopMode = .playOnce
         if playingSpot{
         animationPositionsUsed.append(animationView)
         animationView.play()
