@@ -24,6 +24,7 @@ class WiningScreenViewController: UIViewController{
         
         winingAnimation.frame = winingAnimationView.bounds
         winingAnimationView.addSubview(winingAnimation!)
+        winingAnimation.play()
     }
    
     
