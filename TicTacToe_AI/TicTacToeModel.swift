@@ -1,4 +1,8 @@
+
+
 import Foundation
+
+
 enum piece{
     case X //the X starts the game
     case O
@@ -21,10 +25,6 @@ enum piece{
 struct Board{
     
     typealias Move = Int
-    //empty game board has nine empty positions
-    let emptyBoard: [piece] = [.E, .E, .E,
-                               .E, .E, .E,
-                               .E, .E, .E]
     //the board represented in an array of ppieces form
     let position: [piece]
     //definr whose turn (X or O)
@@ -136,11 +136,10 @@ struct Board{
         if validMoves.count == 9{
             return validMoves.randomElement()!
         }
-        var alpha = Int.min
-        var beta = Int.max
-        var bestVal = Int.min
+        var alpha    = Int.min
+        var beta     = Int.max
+        var bestVal  = Int.min
         var bestMove = -1
-
         for move in board.validMoves{
             let result = minimax(board.move(move), maxmizing: false, player: board.turn, depth: depth, &alpha, &beta)
             if result > bestVal{
@@ -152,16 +151,7 @@ struct Board{
         
     }
     
-    func updateScore(_ xScore: inout Int,_ oScore: inout Int){
-        switch turn {
-        case .X:
-            oScore += 1
-        case.O:
-            xScore += 1
-        default:
-            break
-        }
-     }
+    
     
     
 }

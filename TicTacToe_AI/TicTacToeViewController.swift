@@ -17,12 +17,9 @@ class TicTacToeViewController: UIViewController {
     @IBOutlet weak var oAnimationView: UIView!
     
     var game = Board()
-    let oImg: UIImage?                          = UIImage(named: "O.png")
-    let xImg: UIImage?                          = UIImage(named: "X.png")
     var xScore: Int                             = 0
     var oScore: Int                             = 0
     var currentState: String                    = ""
-    var usedPositions: [UIButton]               = []
     var animationPositionsUsed: [AnimationView] = []
     let hardnessLevel: Int                      = 30
     var winner: piece                           = .E
@@ -30,14 +27,12 @@ class TicTacToeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //intial move
         aiMove()
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         let xAnimation = animation(player: .X, playingSpot: false)
         xAnimation.frame = xAnimationView.bounds
         let oAnimation = animation(player: .O, playingSpot: false)
@@ -96,9 +91,8 @@ class TicTacToeViewController: UIViewController {
             animationView.animation = Animation.named("sparta")
         case .O:
             animationView.animation = Animation.named("sparta2")
-        default:
+        case .E:
             animationView.animation = Animation.named("looser")
-
         }
         animationView.contentMode = .scaleToFill
         animationView.loopMode = .playOnce
@@ -115,23 +109,29 @@ class TicTacToeViewController: UIViewController {
         if game.isWin(){
             winner = game.turn.opposite
             performSegue(withIdentifier: "showWinner", sender: nil)
-            game.updateScore(&xScore, &oScore)
-            xScoreLabel.text = String(xScore)
-            oScoreLabel.text = String(oScore)
-            clearGameBoard(board: usedPositions)
-      
-            
+            switch winner {
+            case .X:
+                xScore += 1
+                xScoreLabel.text = String(xScore)
+            case.O:
+                oScore += 1
+                oScoreLabel.text = String(oScore)
+
+            default:
+                preconditionFailure("unexpected winner")
+            }
+            clearGameBoard()
         }
         else if game.isDraw{
             winner = .E
             performSegue(withIdentifier: "showWinner", sender: nil)
-            clearGameBoard(board: usedPositions)
+            clearGameBoard()
             
             
         }
     }
     
-    func clearGameBoard(board array: [UIButton]){
+    func clearGameBoard(){
         game =  Board()
         for animationView in animationPositionsUsed {
             animationView.superview?.backgroundColor = .darkGray
