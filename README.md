@@ -13,10 +13,12 @@ In this app you get to play your favirout game and get beaten by the AI.
 the AI is implemented using the minimax searching algorithm along with the alpha-beta optimzation!
 the game also is supported with wonderfull animations to make it more joyfull.
 ## Screenshots
-![image](https://user-images.githubusercontent.com/52084438/106194474-8f899500-61b7-11eb-89e4-6c23ca6e3216.png)
-![image](https://user-images.githubusercontent.com/52084438/106194468-8d273b00-61b7-11eb-8057-d7c1333e863a.png)
-![image](https://user-images.githubusercontent.com/52084438/106194363-62d57d80-61b7-11eb-9f75-5e66b90f6c28.png)
-![image](https://user-images.githubusercontent.com/52084438/106194938-27877e80-61b8-11eb-9b70-dc63edfd518f.png)
+![1](https://user-images.githubusercontent.com/52084438/119277564-c1b87a00-bc20-11eb-8249-ca8c46363837.gif)
+
+![2](https://user-images.githubusercontent.com/52084438/119277568-c3823d80-bc20-11eb-9bb3-b5b5299e4e95.gif)
+
+![3](https://user-images.githubusercontent.com/52084438/119277589-dc8aee80-bc20-11eb-8a00-9311ff5218fa.gif)
+
 
 
 ## Technologies
