@@ -1,5 +1,5 @@
 # TicTacToe_AI game using MiniMax searching algorithm
-> Descrition?!! Who doesn't know TicTacToe! 
+> description?!! Who doesn't know TicTacToe?! 
 
 ## Table of contents
 * [General info](#general-info)
